@@ -1,0 +1,21 @@
+# Maven generated folder
+target/
+\#*#
+test_config/log4j.xml
+
+#Eclipse files. These should not be checked in ever.
+.classpath
+.project
+.settings/
+
+*\#
+.DS_Store
+impl/bin
+lib
+*.iml
+*.ipr
+*.iws
+.idea
+*.eml
+
+*.orig
