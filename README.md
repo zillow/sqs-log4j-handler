@@ -1,11 +1,11 @@
-A custom-built log4j appender that sends over log messages to a SQS queue
+A custom-built log4j appender that sends over log messages to a SQS queue (can be used to monitor Spark/Hadoop applications)
 ================================
 # Introduction
 From time to time, we want to monitor a remote application through its log messages in near realtime. For example, we could tunnel these log messages into Splunk and set up alerts monitor exceptions and warnings.
-`AWS Cloudwatch` is such a system, but comes with its limitations and specific requirements. This tiny little log4j appender library will allow you to set up a similar remote log monitor system with minimum cost (SQS is super cheap) with your JAVA application. For python application, check out (the python equivalent here)[https://github.com/zillow/python-sqs-logging-handler]
+`AWS Cloudwatch` is such a system, but comes with its limitations and specific requirements. This tiny little log4j appender library will allow you to set up a similar remote log monitor system with minimum cost (SQS is super cheap) with your JAVA application. For python application, check out [the python equivalent here](https://github.com/zillow/python-sqs-logging-handler)
 
 # Case study
-We use this log4j appender and its (python equivalent)[https://github.com/zillow/python-sqs-logging-handler] to monitor our EMR Spark applications. Getting near-realtime log messages from Spark/Hadoop is difficult because log output from the executors are written to HDFS, and is only collectable when the application finishes. Only log outputs from the master node and other global status messages are tracked in realtime by `CloudWatch`. To solve this problem, we simply rolled up our own log4j appender. For more details, see usage section.
+We use this log4j appender and its [python equivalent](https://github.com/zillow/python-sqs-logging-handler) to monitor our EMR Spark applications. Getting near-realtime log messages from Spark/Hadoop is difficult because log output from the executors are written to HDFS, and is only collectable when the application finishes. Only master node and other global status messages are tracked in realtime by `CloudWatch`. To solve this problem, we simply rolled up our own log4j appender so we can collect log4j output from all nodes in the EMR cluster. For more details, see usage section.
 
 # Scale of your application
 AWS SQS is NOT for large-scale message processing. You can use `AWS Kinesis` stream for large scale log messages, and pay a premium.
@@ -74,4 +74,5 @@ the configuration file only needs to be updated on the master. Here is an exampl
     # (Optional) This guy is also very verbose
     com.amazon.ws.emr.hadoop.fs.s3n.S3NativeFileSystem=WARN
     
-
+# Build status
+Succeeded on Ubuntu 14.04 on 2017-09-01
